@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Upload Sales CSV</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background: #f0f4f8;
+      padding: 50px;
+      display: flex;
+      justify-content: center;
+    }
+    .upload-box {
+      background: #fff;
+      padding: 30px;
+      border-radius: 12px;
+      box-shadow: 0 0 20px rgba(0,0,0,0.1);
+      width: 400px;
+      text-align: center;
+    }
+    input[type="file"] {
+      margin: 20px 0;
+    }
+    button {
+      background: #007bff;
+      border: none;
+      padding: 10px 20px;
+      color: white;
+      border-radius: 6px;
+      font-size: 16px;
+      cursor: pointer;
+    }
+    button:hover {
+      background: #0056b3;
+    }
+    a.download {
+      display: inline-block;
+      margin-top: 20px;
+      color: #007bff;
+    }
+  </style>
+</head>
+<body>
+  <div class="upload-box">
+    <h2>Upload Sales CSV</h2>
+    <form action="http://localhost:5000/api/upload" method="POST" enctype="multipart/form-data">
+      <input type="file" name="file" accept=".csv" required />
+      <br />
+      <button type="submit">Upload</button>
+    </form>
+    <a class="download" href="sales_data.csv" download>📥 Download sample CSV</a>
+  </div>
+</body>
+</html>

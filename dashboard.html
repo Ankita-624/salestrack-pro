@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>SalesTrack Dashboard</title>
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  <style>
+    body {
+      font-family: sans-serif;
+      padding: 20px;
+      background: #f9f9f9;
+    }
+    h2 {
+      text-align: center;
+    }
+    .charts {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 30px;
+      margin-top: 40px;
+    }
+    canvas {
+      background: white;
+      border-radius: 8px;
+      padding: 20px;
+    }
+  </style>
+</head>
+<body>
+  <h2>📊 SalesTrack Pro - Analytics Dashboard</h2>
+
+  <div class="charts">
+    <canvas id="topRepsChart"></canvas>
+    <canvas id="regionChart"></canvas>
+    <canvas id="monthlyChart" style="grid-column: span 2;"></canvas>
+  </div>
+
+  <script>
+    const token = prompt("Enter your JWT token:");
+
+    async function fetchData(endpoint) {
+      const res = await fetch(`http://localhost:5000/api/kpi/${endpoint}`, {
+        headers: {
+          Authorization: `Bearer ${token}`
+        }
+      });
+      return res.json();
+    }
+
+    async function renderCharts() {
+      const topReps = await fetchData("top-reps");
+      const monthly = await fetchData("monthly");
+      const regions = await fetchData("regions");
+
+      // Top Sales Reps Chart
+      new Chart(document.getElementById("topRepsChart"), {
+        type: "bar",
+        data: {
+          labels: topReps.map(x => x.salesperson),
+          datasets: [{
+            label: "Total Sales",
+            data: topReps.map(x => x.total_sales),
+            backgroundColor: "steelblue"
+          }]
+        }
+      });
+
+      // Region-wise Pie Chart
+      new Chart(document.getElementById("regionChart"), {
+        type: "pie",
+        data: {
+          labels: regions.map(x => x.region),
+          datasets: [{
+            label: "Region Sales",
+            data: regions.map(x => x.total),
+            backgroundColor: ["#f39c12", "#3498db", "#e74c3c", "#2ecc71"]
+          }]
+        }
+      });
+
+      // Monthly Line Chart
+      new Chart(document.getElementById("monthlyChart"), {
+        type: "line",
+        data: {
+          labels: monthly.map(x => x.month),
+          datasets: [{
+            label: "Revenue",
+            data: monthly.map(x => x.total),
+            borderColor: "#8e44ad",
+            tension: 0.3
+          }]
+        }
+      });
+    }
+
+    renderCharts();
+  </script>
+</body>
+</html>
