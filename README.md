@@ -1,4 +1,7 @@
 # SalesTrack Pro 📈
+![Status](https://img.shields.io/badge/status-deployed-brightgreen)
+![License](https://img.shields.io/badge/license-MIT-blue)
+
 
 A **cloud-based sales analytics dashboard** built using modern full-stack technologies. SalesTrack Pro allows businesses to upload sales data securely, analyze key performance indicators, and visualize trends through dynamic charts. Built with Node.js, PostgreSQL, and hosted entirely on AWS infrastructure, this project demonstrates real-world backend, cloud, and dashboard development skills.
 
